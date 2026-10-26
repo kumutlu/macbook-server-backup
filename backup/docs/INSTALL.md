@@ -8,7 +8,8 @@ kişisel Mac'te değil. SSH anahtarın varsa `ssh sunucu` ile gir.
 ```bash
 git clone https://github.com/kumutlu/macbook-server-backup.git
 cd macbook-server-backup/backup
-sudo ./bin/mb-discover.sh > discover-$(date +%F).txt
+# Not: git klonunda çalıştırma izni olmayabilir; bash ile çağırmak her zaman çalışır.
+sudo bash bin/mb-discover.sh > discover-$(date +%F).txt
 less discover-$(date +%F).txt
 ```
 
@@ -33,8 +34,12 @@ rclone version
 ## 2. Kurulum
 
 ```bash
-sudo ./install.sh
+sudo bash install.sh
 ```
+
+(`chmod +x bin/*.sh install.sh` de yapabilirsin; kurulum betikleri `/opt/macbook-backup`
+altına `755` olarak kopyalar ve `/usr/local/bin`'e bağlar, yani sonrasında `mb-backup.sh`
+komut olarak çalışır.)
 
 Bu komut: betikleri `/opt/macbook-backup` + `/usr/local/bin`, yapılandırmayı
 `/etc/macbook-backup`, systemd unit'lerini kurar; `restic-password` dosyasını üretir.

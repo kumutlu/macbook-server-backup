@@ -32,13 +32,13 @@ MacBook Server (Ubuntu Server) → yerel tutarlı döküm → istemci tarafı ş
 | `etc/excludes.txt` | Hariç tutulan yollar (docker katmanları, önbellekler…) |
 | `systemd/` | `macbook-backup.service` + `.timer` |
 | `install.sh` | Sunucuda kurulum (root) |
-| `docs/` | KURULUM, OAUTH, GERİ YÜKLEME, SORUN GİDERME |
+| `docs/` | KURULUM, OAUTH, GERİ YÜKLEME, FELAKET KURTARMA, SORUN GİDERME |
 
 ## Hızlı başlangıç (sunucuda)
 
 ```bash
-sudo ./install.sh
-sudo ./bin/mb-discover.sh > discover-$(date +%F).txt   # neyin yedekleneceğini gör
+sudo bash install.sh
+sudo bash bin/mb-discover.sh > discover-$(date +%F).txt   # neyin yedekleneceğini gör
 sudo rclone config create gdrive drive scope=drive.file
 sudo mb-backup.sh --dry-run
 sudo MB_AUTO_INIT=1 mb-backup.sh
