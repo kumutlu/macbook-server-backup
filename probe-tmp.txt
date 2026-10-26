@@ -1,1 +1,18 @@
-docker ps, systemctl status, curl -I http://localhost:2283
+## 2. Tek dosyayı doğrudan dışarı almak
+
+```bash
+restic dump latest /etc/pihole/pihole-FTL.db > /var/tmp/pihole-FTL.db
+restic dump latest /var/backups/macbook-server/databases/immich-all-databases.sql > /var/tmp/immich.sql
+```
+
+## 3. Veritabanlarını geri yükleme (Immich)
+
+```bash
+# Önce servisi durdur (ÜRETİM ETKİSİ: kullanıcılar erişemez) — izin alınarak yapılır
+cd /srv/immich && docker compose stop immich-server immich-microservices
+# Dökümü geri yükle
+docker exec -i immich_postgres psql -U postgres -d postgres < /var/tmp/immich.sql
+docker compose up -d
+```
+
+`pg_dumpall --clean` çıktısı nesneleri önce siler; doğru veritabanına uygulandığından emin ol.
