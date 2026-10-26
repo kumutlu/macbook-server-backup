@@ -1,7 +1,3 @@
-## 4. Pi-hole
-
-```bash
-sudo systemctl stop pihole-FTL 2>/dev/null || docker stop pihole
-sudo cp /var/tmp/pihole-FTL.db /etc/pihole/pihole-FTL.db
-sudo systemctl start pihole-FTL 2>/dev/null || docker start pihole
-```
+6. Docker volume'ları: `/mnt/restore/var/lib/docker/volumes` içeriğini ilgili volume'lara
+   kopyala (`docker volume create` + `rsync`); sonra `docker compose up -d`.
+7. Immich veritabanını §3'teki gibi geri yükle, Pi-hole'u §4 gibi yerleştir.
