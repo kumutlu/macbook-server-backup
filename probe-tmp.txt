@@ -1,9 +1,0 @@
-## 6. Geri yükleme testini düzenli yap
-
-```bash
-sudo mb-restore-test.sh
-```
-
-Bu betik üretim verisine dokunmaz: en son snapshot'tan bir yolu geçici dizine açar,
-canlı dosyalarla sha256 karşılaştırır, sonra geçici dizini siler. Ayda bir çalıştır;
-`MB_RESTORE_TEST_PATH` ile test edilecek yolu değiştirebilirsin.
