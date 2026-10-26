@@ -1,1 +1,1 @@
-sshd_config
+SSH_DIR="/etc/ssh"
