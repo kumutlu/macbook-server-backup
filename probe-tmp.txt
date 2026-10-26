@@ -1,21 +1,24 @@
-section "docker"
+section "immich"
+found_immich=0
+for d in /srv/immich /opt/immich /home/*/immich /srv/docker/immich; do
+  if [ -d "$d" ]; then
+    found_immich=1
+    echo "dizin: $d ($(du -sh "$d" 2>/dev/null | awk '{print $1}'))"
+    ls -1 "$d" 2>/dev/null | head -20
+  fi
+done
+[ "$found_immich" = 0 ] && echo "immich dizini bulunamadı (yol farklı olabilir)"
+for p in /srv/immich/library /mnt/immich /srv/immich/upload; do
+  [ -e "$p" ] && echo "immich library: $p = $(du -sh "$p" 2>/dev/null | awk '{print $1}')  <-- BOYUTU GÖRMEDEN YEDEĞE EKLEME"
+done
 if have docker; then
-  docker ps --format 'tablo: {{.Names}}\t{{.Image}}\t{{.Status}}' 2>/dev/null || echo "docker erişilemedi"
-  echo "--- volume'lar ve boyutları ---"
-  docker system df -v 2>/dev/null | sed -n '1,80p' || true
-  echo "--- compose dosyaları (yol) ---"
-  find /srv /opt /home /root -maxdepth 4 \( -name 'docker-compose.yml' -o -name 'docker-compose.yaml' -o -name 'compose.yml' -o -name 'compose.yaml' \) -type f 2>/dev/null | head -40
-else
-  echo "docker kurulu değil"
+  docker ps --format '{{.Names}}' 2>/dev/null | grep -i immich | sed 's/^/immich container: /'
 fi
 
-section "servisler (systemd)"
-systemctl list-units --type=service --state=running --no-pager --no-legend 2>/dev/null | awk '{print $1}' | head -40 || true
-echo "--- özel unit dosyaları (/etc/systemd/system) ---"
-find /etc/systemd/system -maxdepth 2 -name '*.service' -o -maxdepth 2 -name '*.timer' 2>/dev/null | head -40
-
-section "zamanlayıcılar"
-systemctl list-timers --all --no-pager --no-legend 2>/dev/null | head -20 || true
-echo "--- kullanıcı cron ---"
-ls -1 /etc/cron.d 2>/dev/null || true
-crontab -l 2>/dev/null | sed 's/^/root: /' || true
+section "pi-hole"
+for p in /etc/pihole /etc/dnsmasq.d; do
+  [ -d "$p" ] && echo "$p = $(du -sh "$p" 2>/dev/null | awk '{print $1}')"
+done
+for f in /etc/pihole/pihole-FTL.db /etc/pihole/gravity.db; do
+  [ -f "$f" ] && echo "$f = $(du -h "$f" | awk '{print $1}')"
+done
