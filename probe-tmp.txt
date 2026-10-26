@@ -1,18 +1,22 @@
-## 2. Tek dosyayı doğrudan dışarı almak
+## 5. Disk arızasından tam yeniden kurulum
+
+1. Ubuntu Server'ı yeni diske kur (aynı kullanıcı adı, SSH anahtarın).
+2. `sudo apt install -y restic rclone docker.io docker-compose-plugin sqlite3`
+3. rclone tokenını ve restic şifresini yerine koy.
+4. Tüm yedeği boş bir dizine aç, üzerine yazmadan incele:
 
 ```bash
-restic dump latest /etc/pihole/pihole-FTL.db > /var/tmp/pihole-FTL.db
-restic dump latest /var/backups/macbook-server/databases/immich-all-databases.sql > /var/tmp/immich.sql
+export RESTIC_REPOSITORY="rclone:gdrive:MacBook-Server-Backups/restic"
+export RESTIC_PASSWORD_FILE=/root/restic-password
+restic restore latest --target /mnt/restore
+ls /mnt/restore
 ```
 
-## 3. Veritabanlarını geri yükleme (Immich)
+5. Dosyaları bilinçli olarak yerine koy:
 
 ```bash
-# Önce servisi durdur (ÜRETİM ETKİSİ: kullanıcılar erişemez) — izin alınarak yapılır
-cd /srv/immich && docker compose stop immich-server immich-microservices
-# Dökümü geri yükle
-docker exec -i immich_postgres psql -U postgres -d postgres < /var/tmp/immich.sql
-docker compose up -d
+sudo rsync -aHAX --info=progress2 /mnt/restore/srv/ /srv/
+sudo rsync -aHAX /mnt/restore/etc/ /etc/
+sudo rsync -aHAX /mnt/restore/opt/ /opt/
+sudo rsync -aHAX /mnt/restore/root/ /root/
 ```
-
-`pg_dumpall --clean` çıktısı nesneleri önce siler; doğru veritabanına uygulandığından emin ol.
