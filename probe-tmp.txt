@@ -1,22 +1,7 @@
-## 5. Disk arızasından tam yeniden kurulum
-
-1. Ubuntu Server'ı yeni diske kur (aynı kullanıcı adı, SSH anahtarın).
-2. `sudo apt install -y restic rclone docker.io docker-compose-plugin sqlite3`
-3. rclone tokenını ve restic şifresini yerine koy.
-4. Tüm yedeği boş bir dizine aç, üzerine yazmadan incele:
+## 4. Pi-hole
 
 ```bash
-export RESTIC_REPOSITORY="rclone:gdrive:MacBook-Server-Backups/restic"
-export RESTIC_PASSWORD_FILE=/root/restic-password
-restic restore latest --target /mnt/restore
-ls /mnt/restore
-```
-
-5. Dosyaları bilinçli olarak yerine koy:
-
-```bash
-sudo rsync -aHAX --info=progress2 /mnt/restore/srv/ /srv/
-sudo rsync -aHAX /mnt/restore/etc/ /etc/
-sudo rsync -aHAX /mnt/restore/opt/ /opt/
-sudo rsync -aHAX /mnt/restore/root/ /root/
+sudo systemctl stop pihole-FTL 2>/dev/null || docker stop pihole
+sudo cp /var/tmp/pihole-FTL.db /etc/pihole/pihole-FTL.db
+sudo systemctl start pihole-FTL 2>/dev/null || docker start pihole
 ```
