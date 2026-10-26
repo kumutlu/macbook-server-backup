@@ -4,37 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MacBook Server Backup</title>
+<link rel="icon" href="data:,">
 <style>
-body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:42rem;margin:3rem auto;padding:0 1.25rem;color:#1b1b1b}
+body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1.25rem;color:#1b1b1b}
 h1{font-size:1.6rem;margin-bottom:.25rem}
-.sub{color:#555;margin-top:0}
-code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px}
-footer{margin-top:2.5rem;border-top:1px solid #ddd;padding-top:1rem;color:#555;font-size:.9rem}
+h2{font-size:1.05rem;margin-top:2rem}
+p{margin:.75rem 0}
+code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.95em}
+footer{margin-top:2.5rem;border-top:1px solid #ddd;padding-top:1rem;font-size:.9rem}
 </style>
 </head>
 <body>
-<h1>MacBook Server Backup</h1>
-<p class="sub">A private, single-user backup tool.</p>
 
-<p>This application is used by one person to copy encrypted, incremental snapshots of a home
-Ubuntu server to that same person&rsquo;s own Google Drive account. It is not distributed, has no
-other users, and offers no service to the public.</p>
+<h1>MacBook Server Backup</h1>
+
+<p>A personal backup tool for one person. It copies encrypted snapshots of
+its owner's own machine to that same person's own Google Drive account. It is not
+distributed, has no other users, and provides no service to the public.</p>
 
 <h2>What it can access</h2>
+
 <p>It requests exactly one Google permission,
-<code>https://www.googleapis.com/auth/drive.file</code>. With this scope the application can
-only see and manage the files and folders that it creates itself inside Google Drive. It cannot
-read, list, modify or delete any other content in the account, and it shares nothing with
-anyone.</p>
+<code>https://www.googleapis.com/auth/drive.file</code>. With this permission the tool can
+only see and manage the files and folders that it creates itself in Google Drive.
+It cannot read, list, change or delete any other content in the account.</p>
 
-<h2>How it runs</h2>
-<p>The tool runs once a night on the server as a system service, uploads only the parts of the
-snapshot that changed, verifies the result, and keeps 30 daily and 12 monthly recovery points.
-Every file is encrypted on the server before it is uploaded.</p>
+<footer><a href="privacy.html">Privacy</a></footer>
 
-<footer>
-<a href="privacy.html">Privacy policy</a> &middot; Contact:
-<a href="mailto:oumutlu85@gmail.com">oumutlu85@gmail.com</a>
-</footer>
 </body>
 </html>

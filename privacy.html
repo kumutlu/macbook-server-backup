@@ -3,45 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy policy &middot; MacBook Server Backup</title>
+<title>Privacy &middot; MacBook Server Backup</title>
+<link rel="icon" href="data:,">
 <style>
-body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:42rem;margin:3rem auto;padding:0 1.25rem;color:#1b1b1b}
+body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1.25rem;color:#1b1b1b}
 h1{font-size:1.6rem;margin-bottom:.25rem}
-.sub{color:#555;margin-top:0}
-footer{margin-top:2.5rem;border-top:1px solid #ddd;padding-top:1rem;color:#555;font-size:.9rem}
+h2{font-size:1.05rem;margin-top:2rem}
+p{margin:.75rem 0}
+code{background:#f2f2f2;padding:.1rem .3rem;border-radius:3px;font-size:.95em}
+footer{margin-top:2.5rem;border-top:1px solid #ddd;padding-top:1rem;font-size:.9rem}
 </style>
 </head>
 <body>
-<h1>Privacy policy</h1>
-<p class="sub">MacBook Server Backup</p>
 
-<p>MacBook Server Backup is a private tool used by a single person to back up that person&rsquo;s
-own server to that person&rsquo;s own Google Drive account. It has no other users.</p>
+<h1>Privacy</h1>
 
-<h2>Data the tool handles</h2>
-<p>The tool reads files from the owner&rsquo;s own server, encrypts them on that server, and uploads
-the encrypted result to the owner&rsquo;s Google Drive. The encryption password never leaves the
-server and is held in a root-only file.</p>
+<p>MacBook Server Backup is a private tool used by a single person to back up that
+person's own machine to that person's own Google Drive account. It has no other users.</p>
+
+<h2>Data it handles</h2>
+
+<p>Snapshots are encrypted on the owner's own machine before anything is uploaded.
+Only the encrypted result is stored, and only in the owner's own Google Drive. No data
+is sent anywhere else.</p>
+
+<h2>What it can access</h2>
+
+<p>The tool uses the Google permission
+<code>https://www.googleapis.com/auth/drive.file</code>, which limits it to the files and
+folders it created itself. It cannot reach any other content in the account.</p>
 
 <h2>Third parties</h2>
-<p>No data is sent anywhere except Google Drive, and only for the purpose of storing the
-encrypted backup. The tool contains no analytics, telemetry, advertising or tracking, and it
-does not sell or share data with anyone.</p>
 
-<h2>Google account data</h2>
-<p>The tool uses the Google OAuth scope
-<code>https://www.googleapis.com/auth/drive.file</code>, which limits it to files it created
-itself. OAuth credentials are stored only on the owner&rsquo;s server, readable only by its
-administrator, and are never published.</p>
+<p>There is no analytics, telemetry, advertising or tracking, and no data is sold or
+shared with anyone.</p>
 
-<h2>Retention and deletion</h2>
-<p>The tool keeps 30 daily and 12 monthly encrypted recovery points and deletes older ones.
-Deleting the <code>MacBook-Server-Backups</code> folder in Google Drive, or revoking the app&rsquo;s
-access from the Google Account permissions page, removes the stored backup data.</p>
+<h2>Retention and removal</h2>
 
-<h2>Contact</h2>
-<p>Questions: <a href="mailto:oumutlu85@gmail.com">oumutlu85@gmail.com</a></p>
+<p>Deleting the backup folder in Google Drive, or revoking the app's access from the
+Google Account permissions page, removes the stored backup data.</p>
 
 <footer><a href="index.html">Home</a></footer>
+
 </body>
 </html>
