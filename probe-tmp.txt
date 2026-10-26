@@ -1,0 +1,1 @@
+export RESTIC_PASSWORD_FILE=/root/restic-password
