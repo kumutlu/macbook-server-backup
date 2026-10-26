@@ -1,0 +1,18 @@
+# Sırlar ve kimlik bilgileri - ASLA commit edilmez
+backup/etc/macbook-backup.conf
+!backup/etc/macbook-backup.conf.example
+**/restic-password*
+**/rclone.conf
+**/*.token
+**/*.key
+**/*.pem
+.env
+.env.*
+
+# Keşif/rapor çıktıları sunucu ayrıntısı içerir
+discover-*.txt
+*.discover.txt
+
+# Geri yükleme testi geçici dizinleri
+restore-test/
+/var/tmp/mb-restore-test/

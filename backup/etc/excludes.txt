@@ -1,0 +1,40 @@
+# restic --exclude-file biçimi. Yorumlar ve boş satırlar yok sayılır.
+#
+# Docker katman deposu: yeniden üretilebilir, çok büyük.
+/var/lib/docker/overlay2
+/var/lib/docker/image
+/var/lib/docker/containers
+/var/lib/containerd
+#
+# Önbellekler ve geçici dosyalar
+/var/cache
+/var/tmp
+/tmp
+/var/log/journal
+*.log.gz
+**/node_modules
+**/.cache
+**/Cache
+**/CachedData
+**/.npm
+**/.gradle
+**/.venv
+**/__pycache__
+#
+# Çekirdek/sanal dosya sistemleri
+/proc
+/sys
+/dev
+/run
+/snap
+/var/lib/lxcfs
+/var/lib/docker/volumes/backingFsBlockDev
+#
+# Yerel yedek/staging dizini kendini yedeklemesin (dökümler zaten MB_BACKUP_PATHS içinde)
+/var/backups/macbook-server/tmp
+#
+# İndirilen, yeniden elde edilebilir büyük dosyalar (gerekiyorsa kaldır)
+**/Downloads
+**/*.iso
+**/*.img
+**/*.vmdk
