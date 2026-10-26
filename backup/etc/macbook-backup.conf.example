@@ -1,0 +1,72 @@
+# MacBook Server Backup - örnek yapılandırma
+# Kopyala: install -m 600 -o root -g root etc/macbook-backup.conf.example /etc/macbook-backup/macbook-backup.conf
+# Bu dosya bash olarak okunur. SIR KOYMA: şifre ayrı dosyada, OAuth tokenı rclone.conf içinde.
+
+# --- Depo ---------------------------------------------------------------
+# Google Drive üzerinde rclone uzak adı (kurulumda: rclone config create gdrive drive scope=drive.file)
+MB_REMOTE="gdrive:MacBook-Server-Backups"
+MB_REPOSITORY="rclone:${MB_REMOTE}/restic"
+
+# rclone yapılandırması (token burada; 0600, root)
+MB_RCLONE_CONFIG="/root/.config/rclone/rclone.conf"
+
+# restic şifre dosyası (0600, root). KAYBI = yedeklerin kaybı.
+MB_PASSWORD_FILE="/etc/macbook-backup/restic-password"
+
+# Depoda görünecek sunucu adı
+MB_HOST="macbook-server"
+
+# --- Neyin yedekleneceği -----------------------------------------------
+# Önce ./bin/mb-discover.sh çalıştır ve boyutlara bak.
+MB_BACKUP_PATHS=(
+  /etc
+  /srv
+  /opt
+  /root
+  /home
+  "${MB_STAGING_DIR:-/var/backups/macbook-server}"
+)
+
+# Immich fotoğraf arşivi BÜYÜKTÜR: boyutunu görmeden ekleme.
+# mb-discover.sh çıktısındaki "immich library" satırına bak, sonra bilinçli olarak aç:
+#   /srv/immich/library
+#
+# Boyut koruması: bu dizinler toplamı sınırı aşarsa yedek başlamaz.
+MB_GUARD_PATHS=(
+  /srv/immich/library
+)
+MB_GUARD_MAX_GB=500
+
+MB_EXCLUDES_FILE="/etc/macbook-backup/excludes.txt"
+
+# --- Saklama politikası -------------------------------------------------
+# restic forget --prune; bayat snapshot'lar bu kuralla silinir.
+MB_KEEP_DAILY=30
+MB_KEEP_WEEKLY=8
+MB_KEEP_MONTHLY=12
+MB_KEEP_YEARLY=2
+# --prune disk/CPU harcar; 0 yaparsan yalnızca forget uygulanır.
+MB_PRUNE=1
+
+# --- Doğrulama ----------------------------------------------------------
+# Her gün verinin 5% kadarı okunarak bütünlük kontrolü yapılır.
+MB_CHECK_SUBSET="5%"
+
+# --- Kaynak kullanımı ---------------------------------------------------
+# Yükleme hızı sınırı (restic/rclone); ev bağlantısı için 8M makul.
+MB_LIMIT_UPLOAD="8M"
+# restic okuma eşzamanlılığı; düşük değer CPU/RAM tasarrufu sağlar.
+MB_READ_CONCURRENCY=2
+MB_RETRY_LOCK="10m"
+
+# --- İlk kurulum --------------------------------------------------------
+# Depo yoksa otomatik oluşturulsun mu? İlk çalıştırmada 1, doğruladıktan sonra 0.
+MB_AUTO_INIT=0
+
+# --- bildirim (isteğe bağlı) -------------------------------------------
+# healthchecks.io benzeri bir URL; başarıda URL, hatada URL/fail çağrılır.
+MB_NOTIFY_URL=""
+
+# --- Kancalar -----------------------------------------------------------
+# Bu dizindeki pre-backup.d/*.sh dosyaları yedekten önce çalışır.
+MB_HOOKS_DIR="/etc/macbook-backup/hooks"
