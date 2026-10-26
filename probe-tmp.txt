@@ -1,3 +1,9 @@
-6. Docker volume'ları: `/mnt/restore/var/lib/docker/volumes` içeriğini ilgili volume'lara
-   kopyala (`docker volume create` + `rsync`); sonra `docker compose up -d`.
-7. Immich veritabanını §3'teki gibi geri yükle, Pi-hole'u §4 gibi yerleştir.
+## 6. Geri yükleme testini düzenli yap
+
+```bash
+sudo mb-restore-test.sh
+```
+
+Bu betik üretim verisine dokunmaz: en son snapshot'tan bir yolu geçici dizine açar,
+canlı dosyalarla sha256 karşılaştırır, sonra geçici dizini siler. Ayda bir çalıştır;
+`MB_RESTORE_TEST_PATH` ile test edilecek yolu değiştirebilirsin.
