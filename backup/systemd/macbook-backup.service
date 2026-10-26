@@ -1,0 +1,39 @@
+[Unit]
+Description=MacBook Server encrypted backup to Google Drive (restic)
+Documentation=https://github.com/kumutlu/macbook-server-backup
+Wants=network-online.target
+After=network-online.target docker.service
+ConditionPathExists=/etc/macbook-backup/macbook-backup.conf
+# systemd >= 229: bu iki anahtar [Unit] bölümünde olmalı
+StartLimitIntervalSec=3h
+StartLimitBurst=3
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mb-backup.sh
+Environment=MB_CONFIG=/etc/macbook-backup/macbook-backup.conf
+# Sunucu görevlerini yavaşlatmamak için düşük öncelik
+Nice=19
+CPUSchedulingPolicy=batch
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+# Uzun sürebilir; yarıda kalan çalışma bir sonraki tetiklemede güvenle devam eder
+TimeoutStartSec=6h
+# Başarısız çalışmayı kısa süre sonra bir kez daha dene
+Restart=on-failure
+RestartSec=15min
+
+# Sertleştirme
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=read-only
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+ReadWritePaths=/var/backups/macbook-server /var/lib/macbook-backup /var/log/macbook-backup /var/cache/macbook-backup-restic
+# Docker soketi üzerinden pg_dumpall/exec için gerekli
+SupplementaryGroups=docker
+
+[Install]
+WantedBy=multi-user.target

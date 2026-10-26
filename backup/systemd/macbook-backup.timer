@@ -1,0 +1,13 @@
+[Unit]
+Description=Günlük MacBook Server yedeği (03:30 civarı)
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=20min
+AccuracySec=1min
+# Kapalı kalan günlerin yedeği açılışta telafi edilir
+Persistent=true
+Unit=macbook-backup.service
+
+[Install]
+WantedBy=timers.target
