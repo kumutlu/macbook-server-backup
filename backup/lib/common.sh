@@ -144,6 +144,29 @@ ensure_repo() {
   die "restic deposu yok veya erişilemiyor: $MB_REPOSITORY — oluşturmak için: MB_AUTO_INIT=1 mb-backup.sh ya da: restic init"
 }
 
+# Kesintiye uğrayan (ya da öldürülen) bir çalışma depoda bayat bir restic kilidi
+# bırakabilir; sonraki yedek bu yüzden başarısız olmamalı. Depoya yazmadan önce kilidi
+# yokla ve yalnızca bayat kilitleri temizle. `restic unlock` çalışmakta olan bir sürecin
+# kilidini kaldırmaz; kendi eşzamanlı çalışmamızı zaten flock engelliyor.
+clear_stale_locks() {
+  repo_ready || return 0
+  local probe
+  if probe="$(restic snapshots --latest 1 2>&1)"; then
+    return 0
+  fi
+  case "$probe" in
+    *already\ locked*)
+      warn "depoda bayat kilit var (kesintiye uğrayan çalışmadan kalmış olabilir); temizleniyor"
+      if restic unlock; then
+        info "bayat kilitler temizlendi, devam ediliyor"
+      else
+        warn "restic unlock başarısız; elle kontrol: restic unlock --remove-all"
+      fi
+      ;;
+  esac
+  return 0
+}
+
 run_hooks() {
   local phase="${1:-}"
   [ -n "$phase" ] || die "run_hooks: aşama adı verilmedi"

@@ -87,6 +87,8 @@ main() {
   # Boyut koruması depo oluşturmadan önce: gereksiz init ve yanlış yükleme olmasın.
   guard_source_size
   ensure_repo
+  # Kesintiye uğrayan önceki çalışmadan kalan bayat kilit varsa temizle.
+  clear_stale_locks
 
   run_hooks pre-backup
   do_backup
