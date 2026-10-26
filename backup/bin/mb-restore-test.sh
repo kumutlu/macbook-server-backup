@@ -25,6 +25,7 @@ require_cmd restic
 require_cmd sha256sum
 check_password_file
 check_remote_reachable
+clear_stale_locks
 
 TARGET="${TMP_ROOT}/$(date -u +%Y%m%dT%H%M%SZ)"
 cleanup() { rm -rf "$TARGET"; }

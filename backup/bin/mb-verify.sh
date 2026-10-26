@@ -24,6 +24,7 @@ prepare_env
 require_cmd restic
 check_password_file
 check_remote_reachable
+clear_stale_locks
 
 info "son snapshot'lar:"
 restic snapshots --host "$MB_HOST" --latest 5

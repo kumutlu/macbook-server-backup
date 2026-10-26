@@ -35,6 +35,14 @@ sudo systemctl stop macbook-backup.service
 sudo restic unlock
 ```
 
+## Kesintiye uğrayan yedekten sonra "repository is already locked"
+
+Çalışma ortasında kesilen (güç kesintisi, `systemctl stop`, `kill`) bir yedek depoda bayat bir
+restic kilidi bırakır. `mb-backup.sh`, `mb-verify.sh`, `mb-restore.sh` ve `mb-restore-test.sh`
+bunu kendileri yoklar ve yalnızca bayat kilitleri `restic unlock` ile temizleyip devam eder;
+çalışan bir sürecin kilidi kaldırılmaz. Log'da "depoda bayat kilit var" satırını görürsün.
+Elle temizlemek gerekirse: `sudo restic unlock` (zorla: `--remove-all`).
+
 ## "depo yok veya erişilemiyor"
 
 İlk kurulumda beklenen durum. `MB_AUTO_INIT=1` ile bir kez çalıştır ya da `sudo restic init`.

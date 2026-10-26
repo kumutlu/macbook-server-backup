@@ -48,6 +48,7 @@ prepare_env
 require_cmd restic
 check_password_file
 check_remote_reachable
+clear_stale_locks
 
 info "geri yükleme: snapshot=$SNAPSHOT hedef=$TARGET include=${INCLUDE:-<tüm snapshot>}"
 restic snapshots "$SNAPSHOT" >/dev/null 2>&1 || MB_DIE_CODE=66 die "snapshot bulunamadı: $SNAPSHOT"
