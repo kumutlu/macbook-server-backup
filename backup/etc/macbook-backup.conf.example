@@ -45,15 +45,15 @@ MB_KEEP_DAILY=30
 MB_KEEP_WEEKLY=8
 MB_KEEP_MONTHLY=12
 MB_KEEP_YEARLY=2
-# --prune disk/CPU harcar; 0 yaparsan yalnızca forget uygulanır.
+# --prune disk/CPU harcar; 0 yaparsan budama atlanır (yalnızca forget).
 MB_PRUNE=1
 
 # --- Doğrulama ----------------------------------------------------------
-# Her gün verinin 5% kadarı okunarak bütünlük kontrolü yapılır.
+# Her gün 5% veri okunarak bütünlük kontrolü yapılır.
 MB_CHECK_SUBSET="5%"
 
 # --- Kaynak kullanımı ---------------------------------------------------
-# Yükleme hızı sınırı (restic/rclone); ev bağlantısı için 8M makul.
+# Yükleme hızı sınırı (rclone/restic); ev bağlantısı için 8M makul.
 MB_LIMIT_UPLOAD="8M"
 # restic okuma eşzamanlılığı; düşük değer CPU/RAM tasarrufu sağlar.
 MB_READ_CONCURRENCY=2
@@ -63,7 +63,7 @@ MB_RETRY_LOCK="10m"
 # Depo yoksa otomatik oluşturulsun mu? İlk çalıştırmada 1, doğruladıktan sonra 0.
 MB_AUTO_INIT=0
 
-# --- bildirim (isteğe bağlı) -------------------------------------------
+# --- Bildirim (isteğe bağlı, sır değil ama özel) ------------------------
 # healthchecks.io benzeri bir URL; başarıda URL, hatada URL/fail çağrılır.
 MB_NOTIFY_URL=""
 
