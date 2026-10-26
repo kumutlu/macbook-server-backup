@@ -80,7 +80,7 @@ https://kumutlu.github.io/macbook-server-backup/ sayfasında yazanlar bu kurulum
 - tek kullanıcı, kişisel yedekleme.
 
 Site ve gerçek davranış arasında fark oluşursa **siteyi değil, gerçeği** esas al: ya kodu
- ya da sayfayı güncelle. Sayfaya e-posta, IP veya sunucu ayrıntısı eklenmez.
+ya da sayfayı güncelle. Sayfaya e-posta, IP veya sunucu ayrıntısı eklenmez.
 
 ## 7. Unattended çalışma kontrolü
 
